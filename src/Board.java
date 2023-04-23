@@ -57,7 +57,7 @@ public class Board {
         placePiece(new Knight(playerColor, new Position(2, 1)));
         placePiece(new Bishop(playerColor, new Position(3, 1)));
         placePiece(new Queen(playerColor, new Position(4, 1)));
-        placePiece(new Knight(playerColor, new Position(5, 1)));
+        placePiece(new King(playerColor, new Position(5, 1)));
         placePiece(new Bishop(playerColor, new Position(6, 1)))
         placePiece(new Knight(playerColor, new Position(7, 1)));
         placePiece(new Rook(playerColor, new Position(8, 1)));
@@ -74,7 +74,7 @@ public class Board {
         placePiece(new Knight(playerColor, new Position(2, 8)));
         placePiece(new Bishop(playerColor, new Position(3, 8)));
         placePiece(new Queen(playerColor, new Position(4, 8)));
-        placePiece(new Knight(playerColor, new Position(5, 8)));
+        placePiece(new King(playerColor, new Position(5, 8)));
         placePiece(new Bishop(playerColor, new Position(6, 8)))
         placePiece(new Knight(playerColor, new Position(7, 8)));
         placePiece(new Rook(playerColor, new Position(8, 8)));
