@@ -9,7 +9,7 @@ public class ChessGame {
         return instance;
     }
 
-    private Board board;
+    private Board board = new Board();
     private boolean isDraw;
     private MoveHandler moveHandler;
     private PlayerColor currentTurn = PlayerColor.White;
@@ -22,7 +22,7 @@ public class ChessGame {
         //sprawdzanie save'a
         //System.out.println("Loading save...");
         //inne ladowanie boarda
-        System.out.println("Game started! Hint: to save a game pass: 's'");
+        System.out.println("Game started! Hint: to save a game pass: "+ InputAction.SAVE);
         board = new Board();
         moveHandler = new MoveHandler();
         isDraw = false;
@@ -41,6 +41,8 @@ public class ChessGame {
         }
         else{
             System.out.println("Current turn: " + currentTurn);
+
+            moveHandler.handleInput();
             var moveInfo = moveHandler.getMoveInfo();
             var pieceToMove = board.getPiece(moveInfo[0]);
 

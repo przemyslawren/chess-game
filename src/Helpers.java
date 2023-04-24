@@ -1,4 +1,11 @@
 public class Helpers {
+    public static InputAction GetInputAction(String line){
+        if(line.toLowerCase().equals(InputAction.SAVE.toString().toLowerCase())){
+            return InputAction.SAVE;
+        }
+
+        return InputAction.MOVE_INPUT;
+    }
     public static PlayerColor GetOppositeColor(PlayerColor playerColor){
         return playerColor == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
     }
