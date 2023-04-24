@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Board {
@@ -51,36 +50,36 @@ public class Board {
     }
 
     private void PlaceWhitePieces(){
-        var playerColor = PlayerColor.White;
+        var playerColor = PlayerColor.WHITE;
 
         placePiece(new Rook(playerColor, new Position(1, 1)));
         placePiece(new Knight(playerColor, new Position(2, 1)));
         placePiece(new Bishop(playerColor, new Position(3, 1)));
         placePiece(new Queen(playerColor, new Position(4, 1)));
         placePiece(new King(playerColor, new Position(5, 1)));
-        placePiece(new Bishop(playerColor, new Position(6, 1)))
+        placePiece(new Bishop(playerColor, new Position(6, 1)));
         placePiece(new Knight(playerColor, new Position(7, 1)));
         placePiece(new Rook(playerColor, new Position(8, 1)));
 
         for (int i = 1; i <= 8; i++) {
-            placePiece(new Pawn(playerColor, newPosition(i, 2)))
+            placePiece(new Pawn(playerColor, new Position(i, 2)));
         }
     }
 
     private void PlaceBlackPieces(){
-        var playerColor = playerColor.Black;
+        var playerColor = PlayerColor.BLACK;
 
         placePiece(new Rook(playerColor, new Position(1, 8)));
         placePiece(new Knight(playerColor, new Position(2, 8)));
         placePiece(new Bishop(playerColor, new Position(3, 8)));
         placePiece(new Queen(playerColor, new Position(4, 8)));
         placePiece(new King(playerColor, new Position(5, 8)));
-        placePiece(new Bishop(playerColor, new Position(6, 8)))
+        placePiece(new Bishop(playerColor, new Position(6, 8)));
         placePiece(new Knight(playerColor, new Position(7, 8)));
         placePiece(new Rook(playerColor, new Position(8, 8)));
 
         for (int i = 1; i <= 8; i++) {
-            placePiece(new Pawn(playerColor, newPosition(i, 7)))
+            placePiece(new Pawn(playerColor, new Position(i, 7)));
         }
     }
 

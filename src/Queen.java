@@ -1,6 +1,8 @@
 public class Queen extends Piece {
+    private final char icon;
     public Queen(PlayerColor playerColor, Position position) {
         super(playerColor, position);
+        icon = (playerColor == PlayerColor.WHITE) ? '♕' : '♛';
     }
 
     @Override
@@ -11,5 +13,10 @@ public class Queen extends Piece {
     @Override
     public void move(Position newPosition) {
 
+    }
+
+    @Override
+    public char getIcon() {
+        return 0;
     }
 }

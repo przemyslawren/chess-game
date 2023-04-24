@@ -11,7 +11,7 @@ public class ChessGame {
 
     private Board board;
     private boolean isDraw;
-    private PlayerColor currentTurn = PlayerColor.White;
+    private PlayerColor currentTurn = PlayerColor.WHITE;
 
     public Board GetBoard() {
         return this.board;

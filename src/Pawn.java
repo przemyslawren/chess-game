@@ -1,14 +1,15 @@
 
 public class Pawn extends Piece {
     private boolean isMoved = false;
-
+    private final char icon;
     public Pawn(PlayerColor color, Position position) {
         super(color, position);
+        icon = (playerColor == PlayerColor.WHITE) ? '♙' : '♟';
     }
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
-        var direction = playerColor == PlayerColor.White ? 1 : -1;
+        var direction = playerColor == PlayerColor.WHITE ? 1 : -1;
 
         var offsetY = newPosition.y - position.y;
         var validOffsetY = isMoved ? 1 : 2;
@@ -41,5 +42,10 @@ public class Pawn extends Piece {
     public void move(Position newPosition) {
         // bicie w przelocie
         this.isMoved = true;
+    }
+
+    @Override
+    public char getIcon() {
+        return icon;
     }
 }

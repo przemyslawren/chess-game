@@ -1,5 +1,5 @@
 public class PlayerColorHelpers {
     public static PlayerColor GetOppositeColor(PlayerColor playerColor){
-        return playerColor == PlayerColor.White ? PlayerColor.Black : PlayerColor.Black;
+        return playerColor == PlayerColor.WHITE ? PlayerColor.BLACK : PlayerColor.WHITE;
     }
 }
