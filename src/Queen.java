@@ -17,6 +17,6 @@ public class Queen extends Piece {
 
     @Override
     public char getIcon() {
-        return 0;
+        return icon;
     }
 }
