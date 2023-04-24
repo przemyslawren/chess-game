@@ -4,12 +4,17 @@ public class Pawn extends Piece {
     private final char icon;
     public Pawn(PlayerColor color, Position position) {
         super(color, position);
-        icon = (playerColor == PlayerColor.WHITE) ? '♙' : '♟';
+        icon = (playerColor == PlayerColor.White) ? '♙' : '♟';
+    }
+
+    @Override
+    public String toString() {
+        return playerColor.name() + " " + "Pawn ";
     }
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
-        var direction = playerColor == PlayerColor.WHITE ? 1 : -1;
+        var direction = playerColor == PlayerColor.White ? 1 : -1;
 
         var offsetY = newPosition.y - position.y;
         var validOffsetY = isMoved ? 1 : 2;

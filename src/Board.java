@@ -5,10 +5,15 @@ public class Board {
 
     public Board() {
         this.fields = new Piece[8][8];
+        this.placePieces();
+    }
+
+    public Piece[][] getFields(){
+        return this.fields;
     }
 
     public void placePiece(Piece piece) {
-        fields[piece.position.x][piece.position.y] = piece;
+        fields[piece.position.x - 1][piece.position.y - 1] = piece;
     }
 
     public void movePiece(Piece piece, Position newPosition) {
@@ -16,13 +21,19 @@ public class Board {
     }
 
     public Piece getPiece(Position position) {
-        return fields[position.x][position.y];
+        return fields[position.x-1][position.y-1];
     }
 
     public boolean isCheck(PlayerColor playerColor) {
         try{
-            var opponentPieces = GetPiecesByColor(PlayerColorHelpers.GetOppositeColor(playerColor));
+            var opponentPieces = GetPiecesByColor(Helpers.GetOppositeColor(playerColor));
             var kingPiece = GetKingPiece(playerColor);
+
+            for(Piece piece: opponentPieces){
+                if(piece.isValidMove(kingPiece.position)){
+                    System.out.println("VALID MOVE FOR: "+ piece);
+                }
+            }
 
             return opponentPieces.stream().anyMatch(x -> x.isValidMove(kingPiece.position));
         }
@@ -44,13 +55,13 @@ public class Board {
         return false;
     }
 
-    private void PlacePieces(){
+    private void placePieces(){
         PlaceWhitePieces();
         PlaceBlackPieces();
     }
 
     private void PlaceWhitePieces(){
-        var playerColor = PlayerColor.WHITE;
+        var playerColor = PlayerColor.White;
 
         placePiece(new Rook(playerColor, new Position(1, 1)));
         placePiece(new Knight(playerColor, new Position(2, 1)));
@@ -67,7 +78,7 @@ public class Board {
     }
 
     private void PlaceBlackPieces(){
-        var playerColor = PlayerColor.BLACK;
+        var playerColor = PlayerColor.Black;
 
         placePiece(new Rook(playerColor, new Position(1, 8)));
         placePiece(new Knight(playerColor, new Position(2, 8)));

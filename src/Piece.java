@@ -14,12 +14,12 @@ public abstract class Piece implements IMovable, IGetIcon {
             return false;
         }
 
-        if(!Board.isPositionValid(position))
+        if(!Board.isPositionValid(newPosition))
         {
             return false;
         }
 
-        return isValidMoveUniq(position);
+        return isValidMoveUniq(newPosition);
     }
 
     protected abstract boolean isValidMoveUniq(Position newPosition);
