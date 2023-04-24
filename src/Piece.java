@@ -1,4 +1,4 @@
-public abstract class Piece implements IMovable {
+public abstract class Piece implements IMovable, GetIcon {
     PlayerColor playerColor;
     Position position;
 

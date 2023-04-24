@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Board {
@@ -51,7 +50,7 @@ public class Board {
     }
 
     private void PlaceWhitePieces(){
-        var playerColor = PlayerColor.White;
+        var playerColor = PlayerColor.WHITE;
 
         placePiece(new Rook(playerColor, new Position(1, 1)));
         placePiece(new Knight(playerColor, new Position(2, 1)));
@@ -68,7 +67,7 @@ public class Board {
     }
 
     private void PlaceBlackPieces(){
-        var playerColor = PlayerColor.Black;
+        var playerColor = PlayerColor.BLACK;
 
         placePiece(new Rook(playerColor, new Position(1, 8)));
         placePiece(new Knight(playerColor, new Position(2, 8)));
