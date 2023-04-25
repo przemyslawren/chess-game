@@ -19,9 +19,6 @@ public class ChessGame {
     }
 
     public void startGame() {
-        //sprawdzanie save'a
-        //System.out.println("Loading save...");
-        //inne ladowanie boarda
         System.out.println("Game started! Hint: to save a game pass: "+ InputAction.SAVE);
         board = new Board();
         moveHandler = new MoveHandler();
@@ -60,10 +57,6 @@ public class ChessGame {
             currentTurn = Helpers.GetOppositeColor(currentTurn);
             handleTurn();
         }
-    }
-
-    public void requestMove(Piece piece, Position newPosition) {
-        // Logika sprawdzająca ruch i wykonująca go
     }
 
     public void offerDraw() {

@@ -18,22 +18,26 @@ public class Board {
     }
 
     public void placePiece(Piece piece) {
-        fields[piece.position.x - 1][piece.position.y - 1] = piece;
+        setPiece(piece.position, piece);
     }
 
     public void movePiece(Piece piece, Position newPosition) {
-        lastBoardMove = new LastBoardMove(fields[newPosition.x-1][newPosition.y-1], piece.position);
-        fields[piece.position.x-1][piece.position.y-1] = null;
+        lastBoardMove = new LastBoardMove(this, newPosition, piece.position);
+        setPiece(piece.position, null);
         piece.position = newPosition;
-        fields[newPosition.x-1][newPosition.y-1] = piece;
+        setPiece(newPosition, piece);
     }
 
     public void clearPiece(Position position){
-        fields[position.x-1][position.y-1] = null;
+        setPiece(position, null);
     }
 
     public Piece getPiece(Position position) {
         return fields[position.x-1][position.y-1];
+    }
+
+    private void setPiece(Position position, Piece piece){
+        fields[position.x - 1][position.y - 1] = piece;
     }
 
     public boolean isCheck(PlayerColor playerColor) {

@@ -41,27 +41,36 @@ public class Pawn extends Piece {
                 return false;
             }
 
-            return !ChessGame.GetInstance().GetBoard().isFreePosition(newPosition);
+            return !ChessGame.GetInstance().GetBoard().isFreePosition(newPosition) || canDoEnPassant(newPosition);
         }
 
         return true;
     }
 
-    @Override
-    public void move(Position newPosition) {
+    private boolean canDoEnPassant(Position newPosition) {
         var board = ChessGame.GetInstance().GetBoard();
 
         var lastBoardMove = board.getLastBoardMove();
-        if(lastBoardMove != null && lastBoardMove.takenPiece != null) {
-            var piece = board.getPiece(lastBoardMove.takenPiece.position);
+        if(lastBoardMove != null && lastBoardMove.takenPiece == null && lastBoardMove.takenPiecePosition != null) {
+            var pieceToCheck = board.getPiece(lastBoardMove.takenPiecePosition);
 
-            if(piece instanceof Pawn){
-                if(Math.abs(piece.position.y - lastBoardMove.movedPieceLastPosition.y) == 2){
-                    if(piece.position.x == newPosition.x && Math.abs(newPosition.y - piece.position.y) == 1){
-                        board.clearPiece(piece.position);
+            if(pieceToCheck != null && pieceToCheck instanceof Pawn){
+                if(Math.abs(pieceToCheck.position.y - lastBoardMove.movedPieceLastPosition.y) == 2){
+                    if(pieceToCheck.position.x == newPosition.x && Math.abs(newPosition.y - pieceToCheck.position.y) == 1){
+                        return true;
                     }
                 }
             }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void move(Position newPosition) {
+        var board = ChessGame.GetInstance().GetBoard();
+        if(canDoEnPassant(newPosition)){
+            board.clearPiece(board.getLastBoardMove().takenPiecePosition);
         }
 
         board.movePiece(this, newPosition);
