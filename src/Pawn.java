@@ -36,8 +36,12 @@ public class Pawn extends Piece {
                 }
             }
         }
-        else if(offsetY * direction > 1){
-            return false;
+        else{
+            if(offsetY * direction > 1){
+                return false;
+            }
+
+            return !ChessGame.GetInstance().GetBoard().isFreePosition(newPosition);
         }
 
         return true;
@@ -45,7 +49,23 @@ public class Pawn extends Piece {
 
     @Override
     public void move(Position newPosition) {
-        // bicie w przelocie
+        var board = ChessGame.GetInstance().GetBoard();
+
+        var lastBoardMove = board.getLastBoardMove();
+        if(lastBoardMove != null && lastBoardMove.takenPiece != null) {
+            var piece = board.getPiece(lastBoardMove.takenPiece.position);
+
+            if(piece instanceof Pawn){
+                if(Math.abs(piece.position.y - lastBoardMove.movedPieceLastPosition.y) == 2){
+                    if(piece.position.x == newPosition.x && Math.abs(newPosition.y - piece.position.y) == 1){
+                        board.clearPiece(piece.position);
+                    }
+                }
+            }
+        }
+
+        board.movePiece(this, newPosition);
+
         this.isMoved = true;
     }
 

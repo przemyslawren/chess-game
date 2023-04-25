@@ -11,11 +11,6 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void move(Position newPosition) {
-
-    }
-
-    @Override
     public String toString() {
         return playerColor.name() + " " + "Queen ";
     }

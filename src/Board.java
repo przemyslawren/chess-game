@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
     private Piece[][] fields;
+    private LastBoardMove lastBoardMove;
 
     public Board() {
         this.fields = new Piece[8][8];
@@ -12,12 +13,23 @@ public class Board {
         return this.fields;
     }
 
+    public LastBoardMove getLastBoardMove() {
+        return lastBoardMove;
+    }
+
     public void placePiece(Piece piece) {
         fields[piece.position.x - 1][piece.position.y - 1] = piece;
     }
 
     public void movePiece(Piece piece, Position newPosition) {
-        // Logika przemieszczająca bierkę
+        lastBoardMove = new LastBoardMove(fields[newPosition.x-1][newPosition.y-1], piece.position);
+        fields[piece.position.x-1][piece.position.y-1] = null;
+        piece.position = newPosition;
+        fields[newPosition.x-1][newPosition.y-1] = piece;
+    }
+
+    public void clearPiece(Position position){
+        fields[position.x-1][position.y-1] = null;
     }
 
     public Piece getPiece(Position position) {
@@ -28,12 +40,6 @@ public class Board {
         try{
             var opponentPieces = GetPiecesByColor(Helpers.GetOppositeColor(playerColor));
             var kingPiece = GetKingPiece(playerColor);
-
-            for(Piece piece: opponentPieces){
-                if(piece.isValidMove(kingPiece.position)){
-                    System.out.println("VALID MOVE FOR: "+ piece);
-                }
-            }
 
             return opponentPieces.stream().anyMatch(x -> x.isValidMove(kingPiece.position));
         }

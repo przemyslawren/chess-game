@@ -1,6 +1,6 @@
 public class Drawer {
     public static void DrawBoard(Piece[][] fields) {
-        for(int y = 0; y < fields.length; y++) {
+        for(int y = fields.length - 1; y >= 0; y--) {
             StringBuilder line = new StringBuilder();
             for(int x = 0; x < fields[y].length; x++){
                 var piece = fields[x][y];

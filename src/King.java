@@ -18,7 +18,7 @@ public class King extends Piece {
 
     @Override
     public void move(Position newPosition) {
-
+        //roszada
     }
 
     @Override

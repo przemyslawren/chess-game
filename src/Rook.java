@@ -16,11 +16,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position newPosition) {
-
-    }
-
-    @Override
     public char getIcon() {
         return icon;
     }

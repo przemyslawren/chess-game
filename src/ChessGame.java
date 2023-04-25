@@ -56,8 +56,9 @@ public class ChessGame {
                 handleTurn();
             }
 
-            //move
-            //switch currentTurn
+            pieceToMove.move(moveInfo[1]);
+            currentTurn = Helpers.GetOppositeColor(currentTurn);
+            handleTurn();
         }
     }
 
