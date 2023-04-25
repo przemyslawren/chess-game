@@ -16,6 +16,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public String toString() {
+        return playerColor.name() + " " + "Queen ";
+    }
+
+    @Override
     public char getIcon() {
         return icon;
     }

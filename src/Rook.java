@@ -11,6 +11,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public String toString() {
+        return playerColor.name() + " " + "Rook ";
+    }
+
+    @Override
     public void move(Position newPosition) {
 
     }

@@ -16,6 +16,11 @@ public class Bishop extends Piece{
     }
 
     @Override
+    public String toString() {
+            return playerColor.name() + " " + "Bishop ";
+    }
+
+    @Override
     public char getIcon() {
         return icon;
     }

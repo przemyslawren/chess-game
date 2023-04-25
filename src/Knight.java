@@ -23,6 +23,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public String toString() {
+        return playerColor.name() + " " + "Knight ";
+    }
+
+    @Override
     public char getIcon() {
         return icon;
     }
