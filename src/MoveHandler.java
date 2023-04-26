@@ -1,11 +1,5 @@
-import java.util.Scanner;
-
 public class MoveHandler extends InputHandler {
     private Position[] moveInfo;
-
-    public MoveHandler(ChessGame chessGame) {
-        super(chessGame);
-    }
 
     @Override
     public String getHandlerActionName() {

@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Board implements Serializable {
+public class Board {
     private Piece[][] fields;
 
     public Board() {
@@ -11,6 +11,11 @@ public class Board implements Serializable {
 
     public Piece[][] getFields(){
         return this.fields;
+    }
+
+    public void resetBoard() {
+        this.fields = new Piece[8][8];
+        this.placePieces();
     }
 
     public void placePiece(Piece piece) {
