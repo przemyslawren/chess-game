@@ -4,7 +4,7 @@ public class Pawn extends Piece {
     private final char icon;
     public Pawn(PlayerColor color, Position position) {
         super(color, position);
-        icon = (playerColor == PlayerColor.White) ? '♙' : '♟';
+        icon = (playerColor == PlayerColor.White) ? '♟' : '♙';
     }
 
     @Override
