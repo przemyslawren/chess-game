@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Position {
     int x, y;
 
@@ -8,5 +10,9 @@ public class Position {
 
     public boolean isEqual(Position position){
         return position.x == x && position.y == y;
+    }
+
+    public boolean isCloserToPosition(Position position, Position position1) {
+        return Math.abs(position.x - x) + Math.abs(position.y - y) < Math.abs(position1.x - x) + Math.abs(position1.y - y);
     }
 }

@@ -7,7 +7,7 @@ public class Bishop extends Piece{
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
-        return Helpers.isCrossValidMove(position, newPosition);
+        return Helpers.isCrossValidAttack(position, newPosition);
     }
 
     @Override

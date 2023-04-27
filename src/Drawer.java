@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Drawer {
     public static void DrawBoard(Piece[][] fields) {
         for(int y = fields.length - 1; y >= 0; y--) {

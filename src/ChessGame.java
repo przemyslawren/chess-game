@@ -12,9 +12,12 @@ public class ChessGame {
     }
 
     private Board board = new Board();
-    private boolean isDraw;
     private MoveHandler moveHandler;
     private PlayerColor currentTurn = PlayerColor.White;
+
+    public PlayerColor getCurrentTurn() {
+        return currentTurn;
+    }
 
     public Board GetBoard() {
         return this.board;
@@ -23,7 +26,7 @@ public class ChessGame {
     public void startGame() {
         System.out.println("CONSOLE CHESS");
         System.out.println("Pass your save name, otherwise press ENTER to start!");
-        System.out.println("Hint! To save a game, pass: "+ InputAction.SAVE.toString().toLowerCase());
+        System.out.println("Hint! To save a game, pass: "+ InputAction.SAVE.toString().toLowerCase() + " and to offer draw pass draw");
         Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
         SaveManager saveManager = new SaveManager();
@@ -43,17 +46,23 @@ public class ChessGame {
         board.initPieces();
     }
 
+    public void setDraw() {
+        System.out.println("Draw!");
+        startGame();
+    }
+
     public void handleTurn(){
         Drawer.DrawBoard(board.getFields());
 
         if(board.isCheckmate(currentTurn)){
             System.out.println("Checkmate! Player " + Helpers.GetOppositeColor(currentTurn) + " wins!");
-        }
-        else if(board.isCheck(currentTurn)) {
-            System.out.println("Current turn: " + currentTurn);
-            System.out.println("Check!");
+            startGame();
         }
         else{
+            if(board.isCheck(currentTurn)){
+                System.out.println("Check!");
+            }
+
             System.out.println("Current turn: " + currentTurn);
 
             moveHandler.handleInput();
@@ -71,6 +80,13 @@ public class ChessGame {
             }
 
             pieceToMove.move(moveInfo[1]);
+
+            if(board.isCheck(currentTurn)){
+                System.out.println("You cannot move to this position, because its check! Try again.");
+                board.rollbackMove();
+                handleTurn();
+            }
+
             currentTurn = Helpers.GetOppositeColor(currentTurn);
             handleTurn();
         }

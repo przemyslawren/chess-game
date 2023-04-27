@@ -18,6 +18,16 @@ public abstract class InputHandler {
                 saveManager.saveBoardToFile(ChessGame.GetInstance().GetBoard(), filename);
                 break;
             }
+            case DRAW: {
+                System.out.println("Draw offer sent by: " + ChessGame.GetInstance().getCurrentTurn() + ". Type 'accept' to accept or anything else to decline.");
+                String filename = scanner.nextLine();
+                if(filename.toLowerCase().equals("accept")){
+                    ChessGame.GetInstance().setDraw();
+                    return;
+                }
+                System.out.println("Draw offer declined by: " + Helpers.GetOppositeColor(ChessGame.GetInstance().getCurrentTurn()));
+                return;
+            }
         }
 
         if(inputAction != getInputAction()){

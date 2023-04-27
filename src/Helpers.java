@@ -3,6 +3,9 @@ public class Helpers {
         if(line.toLowerCase().equals(InputAction.SAVE.toString().toLowerCase())){
             return InputAction.SAVE;
         }
+        else if(line.toLowerCase().equals(InputAction.DRAW.toString().toLowerCase())){
+            return InputAction.DRAW;
+        }
 
         return InputAction.MOVE_INPUT;
     }
@@ -10,7 +13,7 @@ public class Helpers {
         return playerColor == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
     }
 
-    public static boolean isCrossValidMove(Position position, Position newPosition){
+    public static boolean isCrossValidAttack(Position position, Position newPosition){
         var offsetX = newPosition.x - position.x;
         var offsetY = newPosition.y - position.y;
 
@@ -21,18 +24,16 @@ public class Helpers {
             return false;
         }
 
-        for(int x=1; x <= Math.abs(offsetX); x++){
-            for(int y=1; y <= Math.abs(offsetY); y++){
-                if(!ChessGame.GetInstance().GetBoard().isFreePosition(new Position(position.x + (x * dirX), position.y + (y * dirY)))){
-                    return false;
-                }
+        for(int i=1; i < Math.abs(offsetX); i++){
+            if(!ChessGame.GetInstance().GetBoard().isFreePosition(new Position(position.x + (i * dirX), position.y + (i * dirY)))){
+                return false;
             }
         }
 
         return true;
     }
 
-    public static boolean isHorizontalVerticalValidMove(Position currentPosition, Position newPosition) {
+    public static boolean isHorizontalVerticalValidAttack(Position currentPosition, Position newPosition) {
         var offsetX = newPosition.x - currentPosition.x;
         var offsetY = newPosition.y - currentPosition.y;
 

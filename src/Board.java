@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Board {
     private Piece[][] fields;
@@ -51,14 +54,101 @@ public class Board {
         }
     }
 
-    public boolean isCheckmate(PlayerColor playerColor) {
-        // opponenciCelujacyWKrola -> array broniacych pozycji
-        // sprawdzic czy obronca moze obronic krola
+    private boolean canKingMove(King kingPiece, List<Piece> attackingPieces){
+        return kingPiece.getKingPossibleMovesByCurrentPosition().stream().anyMatch(x -> !attackingPieces.stream().anyMatch(y -> y.isValidMove(x)));
+    }
 
-        if(isCheck(playerColor)){
-            // ruchKrola
-            // zaslonienie krola
-            // zbicie opponenta
+    public boolean isCheckmate(PlayerColor playerColor) {
+        try{
+            var opponentPieces = GetPiecesByColor(Helpers.GetOppositeColor(playerColor));
+            var kingPiece = GetKingPiece(playerColor);
+
+            List<Piece> attackingKingOpponentPieces = opponentPieces.stream().filter(x -> x.isValidMove(kingPiece.position)).collect(Collectors.toList());
+
+            if(attackingKingOpponentPieces.size() == 0){
+                return false;
+            }
+            else if(attackingKingOpponentPieces.size() == 1){
+                if(kingPiece.isValidMove(attackingKingOpponentPieces.get(0).position)){
+                    return false;
+                }
+            }
+
+            boolean isCheckedByKnight = attackingKingOpponentPieces.stream().anyMatch(x -> x instanceof Knight);
+
+            if(isCheckedByKnight) {
+                return !canKingMove(kingPiece, attackingKingOpponentPieces);
+            }
+
+            HashMap<Integer, Piece> closestAttackingKingPiecesByVector = new HashMap<>();
+
+            for (Piece piece : attackingKingOpponentPieces) {
+                int vectorX = kingPiece.position.x - piece.position.x;
+                int vectorY = kingPiece.position.y - piece.position.y;
+
+                int vector = vectorX * 10 + vectorY;
+                if(!closestAttackingKingPiecesByVector.containsKey(vector)){
+                    closestAttackingKingPiecesByVector.put(vector, piece);
+                }
+                else{
+                    var closestPiece = closestAttackingKingPiecesByVector.get(vector);
+
+                    if(kingPiece.position.isCloserToPosition(piece.position, closestPiece.position)){
+                        closestAttackingKingPiecesByVector.put(vector, piece);
+                    }
+                }
+            }
+
+            ArrayList<Piece> closestAttackingKingPieces = new ArrayList<>(closestAttackingKingPiecesByVector.values());
+
+            if(closestAttackingKingPieces.size() > 1){
+                return true;
+            }
+            else if(closestAttackingKingPieces.size() == 1){
+                List<Piece> defendingPieces = GetPiecesByColor(playerColor).stream().filter(x -> !(x instanceof King)).collect(Collectors.toList());
+                return !canKingMove(kingPiece, attackingKingOpponentPieces) && !canBlockOrAttackPiece(closestAttackingKingPieces.get(0), kingPiece, defendingPieces);
+            }
+
+            return false;
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private boolean canBlockOrAttackPiece(Piece piece, King kingPiece, List<Piece> defendingPieces) {
+        int vectorX = piece.position.x - kingPiece.position.x;
+        int vectorY = piece.position.y - kingPiece.position.y;
+
+        if(vectorX == 0){
+            for (int i = 1; i <= Math.abs(vectorY); i++) {
+                var position = new Position(kingPiece.position.x, kingPiece.position.y + i * vectorY);
+                if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
+                    Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
+                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
+                    return true;
+                }
+            }
+        }
+        else if(vectorY == 0){
+            for (int i = 1; i <= Math.abs(vectorX); i++) {
+                var position = new Position(kingPiece.position.x + i * vectorX, kingPiece.position.y);
+                if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
+                    Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
+                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
+                    return true;
+                }
+            }
+        }
+        else{
+            for (int i = 1; i <= Math.abs(vectorX); i++) {
+                var position = new Position(kingPiece.position.x + i * vectorX, kingPiece.position.y + i * vectorY);
+                if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
+                    Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
+                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -103,7 +193,7 @@ public class Board {
         }
     }
 
-    private ArrayList<Piece> GetPiecesByColor(PlayerColor playerColor){
+    public ArrayList<Piece> GetPiecesByColor(PlayerColor playerColor){
         var piecesByColor = new ArrayList<Piece>();
 
         for(int i=0; i < this.fields.length; i++){
@@ -117,11 +207,11 @@ public class Board {
         return piecesByColor;
     }
 
-    private Piece GetKingPiece(PlayerColor playerColor) throws Exception {
+    private King GetKingPiece(PlayerColor playerColor) throws Exception {
         for(int i=0; i < this.fields.length; i++){
             for(int j=0; j < this.fields[i].length; j++){
                 if(this.fields[i][j] != null && this.fields[i][j].playerColor == playerColor && this.fields[i][j] instanceof King){
-                    return this.fields[i][j];
+                    return (King) this.fields[i][j];
                 }
             }
         }
@@ -135,5 +225,18 @@ public class Board {
 
     public static boolean isPositionValid(Position position) {
         return position.x >= 1 && position.x < 9 && position.y >= 1 && position.y < 9;
+    }
+
+    public void rollbackMove() {
+        if(lastBoardMove == null){
+            System.out.println("Something went wrong. There is no move to rollback.");
+            return;
+        }
+
+        var piece = getPiece(lastBoardMove.takenPiecePosition);
+        piece.position = lastBoardMove.movedPieceLastPosition;
+        setPiece(lastBoardMove.takenPiecePosition, lastBoardMove.takenPiece);
+        setPiece(lastBoardMove.movedPieceLastPosition, piece);
+        lastBoardMove = null;
     }
 }
