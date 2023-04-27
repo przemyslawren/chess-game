@@ -6,3 +6,39 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Eclipse project files
+.metadata/
+bin/
+*.tmp
+*.bak
+*.swp
+.settings/
+.project
+.classpath
+
+# IntelliJ IDEA project files
+*.iml
+.idea/
+
+# Maven build directories
+target/
+*/target/
+
+# Gradle build directories
+build/
+*/build/
+
+# Dependency directories
+lib/
+*/lib/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
