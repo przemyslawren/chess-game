@@ -56,7 +56,7 @@ public class Pawn extends Piece {
 
             if(pieceToCheck != null && pieceToCheck instanceof Pawn){
                 if(Math.abs(pieceToCheck.position.y - lastBoardMove.movedPieceLastPosition.y) == 2){
-                    if(pieceToCheck.position.x == newPosition.x && Math.abs(newPosition.y - pieceToCheck.position.y) == 1){
+                    if(pieceToCheck.position.x == newPosition.x && Math.abs(pieceToCheck.position.x - position.x) == 1 && Math.abs(newPosition.y - pieceToCheck.position.y) == 1){
                         return true;
                     }
                 }
