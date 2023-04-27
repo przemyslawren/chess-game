@@ -6,7 +6,6 @@ public class Board {
 
     public Board() {
         this.fields = new Piece[8][8];
-        this.placePieces();
     }
 
     public Piece[][] getFields(){
@@ -65,7 +64,7 @@ public class Board {
         return false;
     }
 
-    private void placePieces(){
+    public void initPieces(){
         PlaceWhitePieces();
         PlaceBlackPieces();
     }

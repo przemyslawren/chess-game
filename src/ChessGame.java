@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class ChessGame {
     private static ChessGame instance = null;
 
@@ -19,11 +21,26 @@ public class ChessGame {
     }
 
     public void startGame() {
-        System.out.println("Game started! Hint: to save a game pass: "+ InputAction.SAVE);
-        board = new Board();
+        System.out.println("CONSOLE CHESS");
+        System.out.println("Pass your save name, otherwise press ENTER to start!");
+        System.out.println("Hint! To save a game, pass: "+ InputAction.SAVE.toString().toLowerCase());
+        Scanner scanner = new Scanner(System.in);
+        String fileName = scanner.nextLine();
+        SaveManager saveManager = new SaveManager();
+        if (!fileName.isEmpty()) {
+            board = saveManager.loadBoardFromFile(fileName);
+        } else {
+            initBoard();
+        }
+
         moveHandler = new MoveHandler();
-        isDraw = false;
         handleTurn();
+    }
+
+    public void initBoard() {
+        System.out.println("Starting a new game.");
+        board = new Board();
+        board.initPieces();
     }
 
     public void handleTurn(){

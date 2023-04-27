@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class MoveHandler extends InputHandler {
     private Position[] moveInfo;
 

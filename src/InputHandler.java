@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public abstract class InputHandler {
     protected String lastArgs;
 
@@ -13,7 +12,10 @@ public abstract class InputHandler {
         var inputAction = Helpers.GetInputAction(lastArgs);
         switch(inputAction) {
             case SAVE: {
-                System.out.println("SAVING!!!");
+                System.out.println("Enter a file name to save:");
+                String filename = scanner.nextLine();
+                SaveManager saveManager = new SaveManager();
+                saveManager.saveBoardToFile(ChessGame.GetInstance().GetBoard(), filename);
                 break;
             }
         }
