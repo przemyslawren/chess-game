@@ -2,17 +2,12 @@ public class Bishop extends Piece{
     private final char icon;
     public Bishop(PlayerColor playerColor, Position position) {
         super(playerColor, position);
-        icon = (playerColor == PlayerColor.White) ? '♗' : '♝';
+        icon = (playerColor == PlayerColor.White) ? '♝' : '♗';
     }
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
         return Helpers.isCrossValidMove(position, newPosition);
-    }
-
-    @Override
-    public void move(Position newPosition) {
-
     }
 
     @Override

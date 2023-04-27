@@ -3,12 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class SaveManager {
-    private Board board;
-
-    public SaveManager() {
-        this.board = new Board();
-    }
-    public void saveBoardToFile(String fileName) {
+    public void saveBoardToFile(Board board, String fileName) {
         try (FileOutputStream fos = new FileOutputStream(fileName)) {
             for (int i = 0; i < board.getFields().length; i++) {
                 for (int j = 0; j < board.getFields()[i].length; j++) {
@@ -30,10 +25,10 @@ public class SaveManager {
             System.out.println("Error saving board to file: " + e.getMessage());
         }
     }
-    public void loadBoardFromFile(String fileName) {
-        try (FileInputStream fis = new FileInputStream(fileName)) {
-            board = new Board(); // Reset board
 
+    public Board loadBoardFromFile(String fileName) {
+        Board board = new Board();
+        try (FileInputStream fis = new FileInputStream(fileName)) {
             int byte1, byte2;
             while ((byte1 = fis.read()) != -1 && (byte2 = fis.read()) != -1) {
                 int encodedPiece = (byte1 << 8) | byte2;
@@ -48,9 +43,11 @@ public class SaveManager {
                     board.placePiece(piece);
                 }
             }
+            return board;
         } catch (IOException e) {
             System.out.println("Error loading board from file: " + e.getMessage());
-            ChessGame.startNewGame();
+            board.initPieces();
+            return board;
         }
     }
 

@@ -21,9 +21,6 @@ public class ChessGame {
     }
 
     public void startGame() {
-        //sprawdzanie save'a
-        //System.out.println("Loading save...");
-        //inne ladowanie boarda
         System.out.println("CONSOLE CHESS");
         System.out.println("Pass your save name, otherwise press ENTER to start!");
         System.out.println("Hint! To save a game, pass: "+ InputAction.SAVE.toString().toLowerCase());
@@ -31,18 +28,21 @@ public class ChessGame {
         String fileName = scanner.nextLine();
         SaveManager saveManager = new SaveManager();
         if (!fileName.isEmpty()) {
-            saveManager.loadBoardFromFile(fileName);
+            board = saveManager.loadBoardFromFile(fileName);
         } else {
-            startNewGame();
+            initBoard();
         }
+
         moveHandler = new MoveHandler();
-        isDraw = false;
         handleTurn();
     }
-    public static void startNewGame() {
+
+    public void initBoard() {
         System.out.println("Starting a new game.");
-        ChessGame.GetInstance().GetBoard().resetBoard();
+        board = new Board();
+        board.initPieces();
     }
+
     public void handleTurn(){
         Drawer.DrawBoard(board.getFields());
 
@@ -70,13 +70,10 @@ public class ChessGame {
                 handleTurn();
             }
 
-            //move
-            //switch currentTurn
+            pieceToMove.move(moveInfo[1]);
+            currentTurn = Helpers.GetOppositeColor(currentTurn);
+            handleTurn();
         }
-    }
-
-    public void requestMove(Piece piece, Position newPosition) {
-        // Logika sprawdzająca ruch i wykonująca go
     }
 
     public void offerDraw() {

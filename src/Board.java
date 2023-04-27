@@ -1,45 +1,48 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Board {
     private Piece[][] fields;
+    private LastBoardMove lastBoardMove;
 
     public Board() {
         this.fields = new Piece[8][8];
-        this.placePieces();
     }
 
     public Piece[][] getFields(){
         return this.fields;
     }
 
-    public void resetBoard() {
-        this.fields = new Piece[8][8];
-        this.placePieces();
+    public LastBoardMove getLastBoardMove() {
+        return lastBoardMove;
     }
 
     public void placePiece(Piece piece) {
-        fields[piece.position.x - 1][piece.position.y - 1] = piece;
+        setPiece(piece.position, piece);
     }
 
     public void movePiece(Piece piece, Position newPosition) {
-        // Logika przemieszczająca bierkę
+        lastBoardMove = new LastBoardMove(this, newPosition, piece.position);
+        setPiece(piece.position, null);
+        piece.position = newPosition;
+        setPiece(newPosition, piece);
+    }
+
+    public void clearPiece(Position position){
+        setPiece(position, null);
     }
 
     public Piece getPiece(Position position) {
         return fields[position.x-1][position.y-1];
     }
 
+    private void setPiece(Position position, Piece piece){
+        fields[position.x - 1][position.y - 1] = piece;
+    }
+
     public boolean isCheck(PlayerColor playerColor) {
         try{
             var opponentPieces = GetPiecesByColor(Helpers.GetOppositeColor(playerColor));
             var kingPiece = GetKingPiece(playerColor);
-
-            for(Piece piece: opponentPieces){
-                if(piece.isValidMove(kingPiece.position)){
-                    System.out.println("VALID MOVE FOR: "+ piece);
-                }
-            }
 
             return opponentPieces.stream().anyMatch(x -> x.isValidMove(kingPiece.position));
         }
@@ -61,7 +64,7 @@ public class Board {
         return false;
     }
 
-    private void placePieces(){
+    public void initPieces(){
         PlaceWhitePieces();
         PlaceBlackPieces();
     }

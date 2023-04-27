@@ -2,7 +2,7 @@ public class Knight extends Piece {
     private final char icon;
     public Knight(PlayerColor playerColor, Position position) {
         super(playerColor, position);
-        icon = (playerColor == PlayerColor.White) ? '♘' : '♞';
+        icon = (playerColor == PlayerColor.White) ? '♞' : '♘';
     }
 
     @Override
@@ -15,11 +15,6 @@ public class Knight extends Piece {
         }
 
         return false;
-    }
-
-    @Override
-    public void move(Position newPosition) {
-
     }
 
     @Override

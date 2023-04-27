@@ -15,7 +15,7 @@ public abstract class InputHandler {
                 System.out.println("Enter a file name to save:");
                 String filename = scanner.nextLine();
                 SaveManager saveManager = new SaveManager();
-                saveManager.saveBoardToFile(filename);
+                saveManager.saveBoardToFile(ChessGame.GetInstance().GetBoard(), filename);
                 break;
             }
         }

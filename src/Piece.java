@@ -24,6 +24,12 @@ public abstract class Piece implements IMovable, IGetIcon {
 
     protected abstract boolean isValidMoveUniq(Position newPosition);
 
+    @Override
+    public void move(Position newPosition) {
+        var board = ChessGame.GetInstance().GetBoard();
+        board.movePiece(this, newPosition);
+    }
+
     public Piece(PlayerColor playerColor, Position position) {
         this.playerColor = playerColor;
         this.position = position;
