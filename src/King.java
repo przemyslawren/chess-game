@@ -16,6 +16,8 @@ public class King extends Piece {
 
         var isValidMove = Math.abs(offsetX) <= 1 && Math.abs(offsetY) <= 1;
 
+        //czy king moze zbic i nie spowoduje szacha
+        
         return isValidMove && (ChessGame.GetInstance().GetBoard().isFreePosition(newPosition));
     }
 

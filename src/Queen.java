@@ -7,7 +7,7 @@ public class Queen extends Piece {
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
-        return Helpers.isCrossValidAttack(position, newPosition) || Helpers.isHorizontalVerticalValidAttack(position, newPosition);
+        return Helpers.isCrossValidMoveOrAttack(position, newPosition) || Helpers.isHorizontalVerticalValidMoveOrAttack(position, newPosition);
     }
 
     @Override

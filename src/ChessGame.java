@@ -91,8 +91,4 @@ public class ChessGame {
             handleTurn();
         }
     }
-
-    public void offerDraw() {
-        // Logika ogłaszająca remis
-    }
 }

@@ -7,7 +7,7 @@ public class Rook extends Piece {
 
     @Override
     protected boolean isValidMoveUniq(Position newPosition) {
-       return Helpers.isHorizontalVerticalValidAttack(position, newPosition);
+       return Helpers.isHorizontalVerticalValidMoveOrAttack(position, newPosition);
     }
 
     @Override

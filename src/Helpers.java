@@ -9,13 +9,14 @@ public class Helpers {
 
         return InputAction.MOVE_INPUT;
     }
+
     public static PlayerColor GetOppositeColor(PlayerColor playerColor){
         return playerColor == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
     }
 
-    public static boolean isCrossValidAttack(Position position, Position newPosition){
-        var offsetX = newPosition.x - position.x;
-        var offsetY = newPosition.y - position.y;
+    public static boolean isCrossValidMoveOrAttack(Position position, Position newPosition){
+        var offsetX = getOffsetX(position, newPosition);
+        var offsetY = getOffsetY(position, newPosition);
 
         var dirX = offsetX > 0 ? 1 : -1;
         var dirY = offsetY > 0 ? 1 : -1;
@@ -33,9 +34,9 @@ public class Helpers {
         return true;
     }
 
-    public static boolean isHorizontalVerticalValidAttack(Position currentPosition, Position newPosition) {
-        var offsetX = newPosition.x - currentPosition.x;
-        var offsetY = newPosition.y - currentPosition.y;
+    public static boolean isHorizontalVerticalValidMoveOrAttack(Position currentPosition, Position newPosition) {
+        var offsetX = getOffsetX(currentPosition, newPosition);
+        var offsetY = getOffsetY(currentPosition, newPosition);
 
         var dirX = offsetX > 0 ? 1 : -1;
         var dirY = offsetY > 0 ? 1 : -1;
@@ -60,5 +61,13 @@ public class Helpers {
         }
 
         return true;
+    }
+
+    public static int getOffsetX(Position position, Position newPosition){
+        return newPosition.x - position.x;
+    }
+
+    public static int getOffsetY(Position position, Position newPosition){
+        return newPosition.y - position.y;
     }
 }
