@@ -37,7 +37,7 @@ public class Pawn extends Piece {
             }
         }
         else{
-            if(offsetY * direction > 1){
+            if(offsetY * direction != 1){
                 return false;
             }
 

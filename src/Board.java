@@ -69,7 +69,7 @@ public class Board {
                 return false;
             }
             else if(attackingKingOpponentPieces.size() == 1){
-                if(kingPiece.isValidMove(attackingKingOpponentPieces.get(0).position)){
+                if(canKingMove(kingPiece, attackingKingOpponentPieces)){
                     return false;
                 }
             }
@@ -125,7 +125,6 @@ public class Board {
                 var position = new Position(kingPiece.position.x, kingPiece.position.y + i * vectorY);
                 if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
                     Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
-                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
                     return true;
                 }
             }
@@ -135,7 +134,6 @@ public class Board {
                 var position = new Position(kingPiece.position.x + i * vectorX, kingPiece.position.y);
                 if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
                     Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
-                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
                     return true;
                 }
             }
@@ -145,7 +143,6 @@ public class Board {
                 var position = new Position(kingPiece.position.x + i * vectorX, kingPiece.position.y + i * vectorY);
                 if(defendingPieces.stream().anyMatch(x -> x.isValidMove(position))){
                     Piece piec =  defendingPieces.stream().filter(x -> x.isValidMove(position)).findFirst().get();
-                    System.out.println(piec.getClass().getName() + "DEFENDING ON "+ position.x + " " + position.y);
                     return true;
                 }
             }

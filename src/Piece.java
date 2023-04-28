@@ -8,14 +8,14 @@ public abstract class Piece implements IMovable, IGetIcon {
             return false;
         }
 
-        var piece = ChessGame.GetInstance().GetBoard().getPiece(newPosition);
-
-        if(piece != null && piece.playerColor == playerColor){
+        if(!Board.isPositionValid(newPosition))
+        {
             return false;
         }
 
-        if(!Board.isPositionValid(newPosition))
-        {
+        var piece = ChessGame.GetInstance().GetBoard().getPiece(newPosition);
+
+        if(piece != null && piece.playerColor == playerColor){
             return false;
         }
 
